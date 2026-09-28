@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://moblet-hamamat.com/sitemap.xml
+Sitemap: https://eslamelshikh-dev.github.io/MOBLETHamamt/sitemap.xml
