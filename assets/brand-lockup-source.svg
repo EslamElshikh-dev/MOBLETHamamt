@@ -1,14 +1,18 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="340" height="106" viewBox="0 0 340 106">
 <g transform="translate(245 8) scale(.36)"><defs>
-    <clipPath id="tile"><path d="M76 16h164v164a60 60 0 0 1-60 60H16V76a60 60 0 0 1 60-60Z"/></clipPath>
+    <linearGradient id="ground" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#244f73"/><stop offset="1" stop-color="#102a40"/></linearGradient>
+    <linearGradient id="porcelain" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ffffff"/><stop offset="1" stop-color="#c3dce9"/></linearGradient>
+    <linearGradient id="blue-tile" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#a7d4eb"/><stop offset="1" stop-color="#4a8cbb"/></linearGradient>
+    <clipPath id="tile"><path d="M64 12h180v180a52 52 0 0 1-52 52H12V64a52 52 0 0 1 52-52Z"/></clipPath>
   </defs>
   <g clip-path="url(#tile)">
-    <path fill="#2b689f" d="M16 16h224v224H16z"/>
-    <path fill="#172f46" d="M16 224 240 40v200H16Z"/>
-    <path fill="#9bc5e5" d="m194 54 46-38v24l-34 28Z"/>
-    <path d="m16 230 83-70m65-57 76-68" fill="none" stroke="#fff" stroke-width="15"/>
-    <path fill="#fff" d="M88 168v-43a43 43 0 1 1 43 43H88Z"/>
-    <path fill="#2b689f" d="M104 152v-27a27 27 0 1 1 27 27h-27Z"/>
+    <path fill="url(#ground)" d="M12 12h232v232H12z"/>
+    <path d="M128 32 171 75 128 118 85 75Z" fill="url(#porcelain)"/>
+    <path d="m177 81 47 47-47 47-47-47Z" fill="url(#blue-tile)"/>
+    <path d="m128 138 43 43-43 43-43-43Z" fill="url(#porcelain)" opacity=".92"/>
+    <path d="m79 81 47 47-47 47-47-47Z" fill="#6aa7cf"/>
+    <path d="m41 128 38-38m49-49 34 34" fill="none" stroke="#fff" stroke-opacity=".38" stroke-width="3"/>
+    <path d="m92 181 36 36 36-36" fill="none" stroke="#fff" stroke-opacity=".38" stroke-width="3"/>
   </g>
 </g>
 <path d="M244 25v55" fill="none" stroke="#62768a" stroke-opacity=".25"/>

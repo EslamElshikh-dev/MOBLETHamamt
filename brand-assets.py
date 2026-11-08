@@ -14,7 +14,7 @@ def inkscape(source, *arguments):
     subprocess.run(['inkscape', str(source), *arguments], cwd=ROOT, check=True, capture_output=True)
 
 for name, ink, muted in [('brand-lockup', '#172f46', '#62768a'), ('brand-lockup-inverse', '#ffffff', '#afc7da')]:
-    plate = '<rect x="247" y="10" width="90" height="90" rx="13" fill="#fff"/>' if name.endswith('inverse') else ''
+    plate = ''
     source = f'''<svg xmlns="http://www.w3.org/2000/svg" width="340" height="106" viewBox="0 0 340 106">
 {plate}<g transform="translate(245 8) scale(.36)">{ART}</g>
 <path d="M244 25v55" fill="none" stroke="{muted}" stroke-opacity=".25"/>
