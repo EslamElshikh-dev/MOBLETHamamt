@@ -55,6 +55,7 @@ h2{font-size:clamp(1.8rem,3.1vw,2.85rem);line-height:1.6}
 .studio-hero .btn-primary{background:var(--copper);color:#1d2e25;box-shadow:none}
 .studio-hero .btn-primary:hover{background:#e3bb92}
 .studio-hero .btn-text{color:#f0ede2;padding-inline:0}
+.studio-hero :focus-visible,.detail-section :focus-visible,.footer :focus-visible{outline-color:var(--copper)}
 .studio-hero .hero-notes{border-color:#d2dbc826;color:#c4cdbd;font-size:11px;gap:22px;margin-top:29px;padding-top:20px;max-width:none}
 .studio-hero .hero-notes .icon{color:var(--copper);width:16px;height:16px}
 .studio-hero .hero-visual{height:570px;margin:15px 0 45px;width:100%;position:relative}
@@ -105,7 +106,7 @@ h2{font-size:clamp(1.8rem,3.1vw,2.85rem);line-height:1.6}
 .service-cover>img{width:100%;height:100%;object-fit:cover;object-position:center 52%;transition:transform .6s var(--ease)}
 .service-card:hover .service-cover>img{transform:scale(1.055)}
 .service-cover::after{content:"";position:absolute;inset:40% 0 0;background:linear-gradient(transparent,#12221864);pointer-events:none}
-.service-photo-tag{position:absolute;inset-inline-end:14px;bottom:12px;color:#fff;font-size:9px;z-index:1}
+.service-photo-tag{position:absolute;inset-inline-end:14px;bottom:12px;color:#fff;background:#142b22e6;padding:3px 8px;border-radius:4px;font-size:9px;z-index:1}
 .service-content{padding:23px 25px 22px;display:flex;flex:1;flex-direction:column}
 .service-top{margin-bottom:14px}
 .service-top>.icon{width:27px;height:27px;stroke-width:1.4}
