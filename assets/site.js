@@ -38,6 +38,36 @@
       location.href = 'https://wa.me/966546562621?text=' + encodeURIComponent(message);
     });
   }
+  const story = document.querySelector('.opening-story');
+  if (story) {
+    const controls = story.querySelector('.story-controls');
+    const photo = story.querySelector('.hero-image');
+    const opener = story.querySelector('[data-story-open]');
+    const caption = story.querySelector('[data-story-caption]');
+    const count = story.querySelector('[data-story-count]');
+    const status = story.querySelector('.story-status');
+    const choices = Array.from(controls.querySelectorAll('[data-story-photo]'));
+    controls.hidden = false;
+    story.querySelector('.story-fallback').hidden = true;
+    controls.addEventListener('click', event => {
+      const choice = event.target.closest('[data-story-photo]');
+      if (!choice || choice.getAttribute('aria-pressed') === 'true') return;
+      const number = choice.dataset.storyPhoto;
+      const width = Number(choice.dataset.storyWidth);
+      const variants = new Map([480, 960, 1440].map(size => [Math.min(size, width), size]));
+      photo.srcset = Array.from(variants, ([descriptor, size]) => 'assets/photos/owner-' + number + '-' + size + '.webp ' + descriptor + 'w').join(', ');
+      photo.src = 'assets/photos/owner-' + number + '-960.webp';
+      photo.alt = choice.dataset.storyAlt;
+      photo.width = width;
+      photo.height = Number(choice.dataset.storyHeight);
+      opener.href = 'assets/photos/owner-' + number + '.webp';
+      opener.dataset.caption = choice.dataset.storyCaption;
+      caption.textContent = choice.dataset.storyCaption;
+      count.textContent = String(choices.indexOf(choice) + 1).padStart(2, '0');
+      choices.forEach(button => button.setAttribute('aria-pressed', String(button === choice)));
+      status.textContent = 'تُعرض الآن صورة: ' + choice.dataset.storyCaption;
+    });
+  }
   const gallery = document.querySelector('.gallery-browser');
   if (gallery) {
     const controls = gallery.querySelector('.gallery-filters');

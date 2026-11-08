@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="340" height="106" viewBox="0 0 340 106">
+<rect x="247" y="10" width="90" height="90" rx="13" fill="#fff"/><g transform="translate(245 8) scale(.36)"><defs>
+    <clipPath id="tile"><path d="M76 16h164v164a60 60 0 0 1-60 60H16V76a60 60 0 0 1 60-60Z"/></clipPath>
+  </defs>
+  <g clip-path="url(#tile)">
+    <path fill="#2b689f" d="M16 16h224v224H16z"/>
+    <path fill="#172f46" d="M16 224 240 40v200H16Z"/>
+    <path fill="#9bc5e5" d="m194 54 46-38v24l-34 28Z"/>
+    <path d="m16 230 83-70m65-57 76-68" fill="none" stroke="#fff" stroke-width="15"/>
+    <path fill="#fff" d="M88 168v-43a43 43 0 1 1 43 43H88Z"/>
+    <path fill="#2b689f" d="M104 152v-27a27 27 0 1 1 27 27h-27Z"/>
+  </g>
+</g>
+<path d="M244 25v55" fill="none" stroke="#afc7da" stroke-opacity=".25"/>
+<text x="229" y="53" direction="rtl" text-anchor="start" font-family="Noto Kufi Arabic" font-size="32" font-weight="700" fill="#ffffff">مبلط حمامات</text>
+<text x="229" y="78" direction="rtl" text-anchor="start" font-family="Noto Sans Arabic" font-size="12" fill="#afc7da">تبليط وترميم · الرياض</text>
+</svg>

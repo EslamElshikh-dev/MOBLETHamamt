@@ -7,3 +7,6 @@ assets/photos/owner-12*
 
 # Source photograph export for the sharing-card composition.
 !assets/photos/owner-06-social.jpg
+
+# Local managed preview output.
+dist/
