@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Build the dependency-free Arabic website. Run: python3 build.py."""
 import html
+import hashlib
 import json
 import pathlib
 import xml.etree.ElementTree as ET
@@ -8,6 +9,7 @@ import xml.etree.ElementTree as ET
 ROOT = pathlib.Path(__file__).parent
 D = json.loads((ROOT / 'site-data.json').read_text())
 BASE = D['url'].rstrip('/')
+ASSET_VERSION = hashlib.sha256((ROOT/'assets/studio.css').read_bytes() + (ROOT/'assets/site.js').read_bytes()).hexdigest()[:10]
 SERVICES = D['services']
 PHOTOS = {p['id']: p for p in D['photos']}
 SIZES = {'01': (1600,2688), '03': (1600,2842), '04': (1600,2133), '05': (1600,2133), '06': (1080,1350), '07': (900,1600), '09': (1600,2133), '10': (1600,2133)}
@@ -56,6 +58,7 @@ def button(text, url=WA, style='primary', which='arrow', external=False):
     return f'<a class="btn btn-{style}" href="{e(url)}"'+ (' target="_blank" rel="noopener noreferrer"' if external else '') + f'>{e(text)}{icon(which)}</a>'
 
 def header(pre, section):
+    section = 'services' if section == 'service' else section
     links = [('الرئيسية', pre or './', 'home'), ('خدماتنا', pre+'services/', 'services'), ('من أعمالنا', pre+'projects/', 'projects'), ('تواصل معنا', pre+'contact/', 'contact')]
     nav=''.join(f'<a href="{url}"'+(' aria-current="page"' if section==key else '')+f'>{title}</a>' for title,url,key in links)
     return f'''<a class="skip" href="#main">انتقل إلى المحتوى</a>
@@ -91,7 +94,7 @@ def layout(path,title,description,body,section='home',crumbs=None,service=None,n
     current_img=service['image'] if service else '04'
     preload=f'<link rel="preload" as="image" href="{pre}assets/photos/owner-{current_img}-960.webp" imagesrcset="'+', '.join(f'{pre}assets/photos/owner-{current_img}-{s}.webp {width}w' for width,s in {min(s,SIZES[current_img][0]): s for s in [480,960,1440]}.items())+'" imagesizes="(max-width: 680px) 100vw, 50vw">' if section in ['home','service'] else ''
     return f'''<!doctype html>
-<html lang="ar-SA" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#f7f4ee"><title>{e(title)}</title><meta name="description" content="{e(description)}"><meta name="robots" content="{'noindex,follow' if noindex else 'index,follow,max-image-preview:large'}"><link rel="canonical" href="{BASE+path}"><link rel="icon" href="{pre}favicon.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="{pre}assets/apple-touch-icon.png"><link rel="manifest" href="{pre}site.webmanifest"><link rel="preload" href="{pre}assets/fonts/plex-arabic-400.woff2" as="font" type="font/woff2" crossorigin>{preload}<link rel="stylesheet" href="{pre}assets/site.css"><link rel="stylesheet" href="{pre}assets/studio.css?v=studio-20261108"><script src="{pre}assets/site.js?v=studio-20261108" defer></script><meta name="creator" content="المهندس إسلام الشيخ"><meta property="og:type" content="website"><meta property="og:locale" content="ar_SA"><meta property="og:site_name" content="{D['name']}"><meta property="og:title" content="{e(title)}"><meta property="og:description" content="{e(description)}"><meta property="og:url" content="{BASE+path}"><meta property="og:image" content="{BASE}/assets/social-cover.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="تفاصيل تبليط من صور مبلط حمامات في الرياض"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="{e(title)}"><meta name="twitter:description" content="{e(description)}"><meta name="twitter:image" content="{BASE}/assets/social-cover.jpg"><script type="application/ld+json">{schema(path,title,description,crumbs,service)}</script></head><body data-page="{section}">{sprite()}{header(pre,section)}<main id="main">{body}</main>{footer(pre)}</body></html>'''
+<html lang="ar-SA" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#f7f4ee"><title>{e(title)}</title><meta name="description" content="{e(description)}"><meta name="robots" content="{'noindex,follow' if noindex else 'index,follow,max-image-preview:large'}"><link rel="canonical" href="{BASE+path}"><link rel="icon" href="{pre}favicon.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="{pre}assets/apple-touch-icon.png"><link rel="manifest" href="{pre}site.webmanifest"><link rel="preload" href="{pre}assets/fonts/plex-arabic-400.woff2" as="font" type="font/woff2" crossorigin>{preload}<link rel="stylesheet" href="{pre}assets/site.css"><link rel="stylesheet" href="{pre}assets/studio.css?v={ASSET_VERSION}"><script src="{pre}assets/site.js?v={ASSET_VERSION}" defer></script><meta name="creator" content="المهندس إسلام الشيخ"><meta property="og:type" content="website"><meta property="og:locale" content="ar_SA"><meta property="og:site_name" content="{D['name']}"><meta property="og:title" content="{e(title)}"><meta property="og:description" content="{e(description)}"><meta property="og:url" content="{BASE+path}"><meta property="og:image" content="{BASE}/assets/social-cover.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="تفاصيل تبليط من صور مبلط حمامات في الرياض"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="{e(title)}"><meta name="twitter:description" content="{e(description)}"><meta name="twitter:image" content="{BASE}/assets/social-cover.jpg"><script type="application/ld+json">{schema(path,title,description,crumbs,service)}</script></head><body data-page="{section}">{sprite()}{header(pre,section)}<main id="main">{body}</main>{footer(pre)}</body></html>'''
 
 def breadcrumbs(items,pre):
     return '<nav class="breadcrumbs" aria-label="مسار التنقل">'+'<span aria-hidden="true">/</span>'.join(f'<a href="{pre+p.lstrip("/")}">{n}</a>' if i<len(items)-1 else f'<span aria-current="page">{n}</span>' for i,(n,p) in enumerate(items))+'</nav>'
