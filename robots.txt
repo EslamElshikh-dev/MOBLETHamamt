@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://eslamelshikh-dev.github.io/MOBLETHamamt/sitemap.xml
+Sitemap: https://moblet-hamamat.vercel.app/sitemap.xml

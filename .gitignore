@@ -1,0 +1,6 @@
+.openai/
+.vercel/
+.qa/
+__pycache__/
+assets/photos/*.jpg
+assets/photos/owner-12*
