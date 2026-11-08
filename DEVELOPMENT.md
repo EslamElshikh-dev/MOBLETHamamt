@@ -41,3 +41,13 @@ Checks for this refresh: regenerated all twelve HTML pages; `python3 validate.py
 ### Porcelain identity revision — November 8, 2026
 
 The owner rejected the forest/copper palette and the previous four-tile logo. The replacement uses a white opening, cool porcelain surfaces, graphite typography and restrained mineral-blue accents. The mark is a new native SVG: a single rotated tile with a white water drop and two grout lines. The header wordmark is bolder. The revised identity is applied to the favicon, Apple/PWA icons, business logo metadata and a new sharing image. Vector originals are retained next to raster exports. Base styles, theme styles and logo URLs share a content-derived version so the previous cached colors and mark are replaced together.
+
+### Architectural identity and opening — November 8, 2026
+
+The current identity replaces the previous drop mark with an original generated architectural emblem: interlocking blue and graphite slabs with a curved negative space. `assets/brand-emblem.png` is the transparent raster master used for website delivery, and `assets/brand-emblem.webp` is its optimized display export. The app icons and favicon share this artwork; the emblem is raster artwork, not a vector logo. `assets/app-icon.svg` is a composition container. The superseded mark and sharing artwork have been removed.
+
+Noto Kufi Arabic Bold provides the geometric Arabic wordmark and headings, with IBM Plex Sans Arabic retained for paragraphs and controls. The self-hosted font subset retains Arabic shaping features; its copyright and SIL OFL text are in `assets/fonts/Noto-Kufi-LICENSE.txt`.
+
+The new opening uses two actual owner photographs, led by the tile and drain detail (owner-06), with owner-04 as a secondary finish image. No project photograph has been generated or retouched. Service icons now share a duotone line style, and cards, headings, inner pages and the footer follow the same visual system. The sharing composition source is `assets/social-cover-identity.svg`; the published JPEG is a 1200 × 630 export. `assets/photos/owner-06-social.jpg` is a resized export of the existing photograph for the SVG renderer.
+
+Checks: `python3 build.py`, `python3 validate.py`, `node --check assets/site.js`, and `git diff --check`. Responsive styles cover narrow screens from 320 px, but a visual mobile-browser check remains outside the available desktop viewport in this session.

@@ -1,5 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512"><rect width="512" height="512" rx="108" fill="#f7f9fb"/><g transform="translate(64 64) scale(4.8)">  <rect x="14" y="14" width="52" height="52" rx="8" transform="rotate(45 40 40)" fill="#2468AB"/>
-  <path d="M40 22c-3.5 5.3-12 14-12 21.2a12 12 0 0 0 24 0C52 36 43.5 27.3 40 22Z" fill="#fff"/>
-  <path d="M34 43a6 6 0 0 0 6 6" stroke="#89B5DC" stroke-width="2.6" stroke-linecap="round"/>
-  <path d="m17.5 42.5 20 20m5-45 20 20" stroke="#A9CAE6" stroke-width="2" stroke-linecap="round"/>
-</g></svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512"><rect width="512" height="512" rx="64" fill="#fff"/><image href="brand-emblem.png" width="512" height="512"/></svg>

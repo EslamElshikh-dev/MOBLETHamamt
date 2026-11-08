@@ -4,3 +4,6 @@
 __pycache__/
 assets/photos/*.jpg
 assets/photos/owner-12*
+
+# Source photograph export for the sharing-card composition.
+!assets/photos/owner-06-social.jpg

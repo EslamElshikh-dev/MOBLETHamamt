@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs><clipPath id="photo"><rect x="50" y="50" width="340" height="530" rx="18"/></clipPath></defs>
+  <rect width="1200" height="630" fill="#f4f7fb"/>
+  <rect x="30" y="30" width="1140" height="570" rx="24" fill="#fff" stroke="#dce6ef"/>
+  <image href="photos/owner-06-social.jpg" x="50" y="50" width="340" height="530" preserveAspectRatio="xMidYMid slice" clip-path="url(#photo)"/>
+  <rect x="415" y="80" width="1" height="470" fill="#e1e9f1"/>
+  <image href="brand-emblem.png" x="970" y="63" width="150" height="150"/>
+  <g direction="rtl" text-anchor="start">
+    <text x="1110" y="278" font-family="Noto Kufi Arabic" font-weight="700" font-size="66" fill="#1c3045">مبلط حمامات</text>
+    <text x="1110" y="360" font-family="Noto Sans Arabic" font-size="30" fill="#245f9f">تفاصيل مرتّبة. ومساحة تتجدّد.</text>
+    <text x="1110" y="440" font-family="Noto Sans Arabic" font-size="28" fill="#657587">ترميم حمامات · سيراميك · بورسلان · رخام</text>
+    <text x="1110" y="530" font-family="Noto Sans Arabic" font-size="25" fill="#657587">الرياض · المصيف</text>
+  </g>
+  <text x="470" y="530" font-family="sans-serif" font-size="24" fill="#1c3045">054 656 2621</text>
+</svg>
