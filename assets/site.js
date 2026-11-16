@@ -27,6 +27,7 @@
   }
   const form = document.getElementById('request-form');
   if (form) {
+    form.querySelector('.request-fields').disabled = false;
     const serviceSelect = form.elements.service;
     serviceSelect.addEventListener('change', () => { form.querySelector('.form-status').textContent = ''; });
     const findService = slug => Array.from(serviceSelect.options).find(option => option.dataset.serviceSlug === slug);
@@ -77,25 +78,32 @@
     const controls = story.querySelector('.story-controls');
     const photo = story.querySelector('.hero-image');
     const opener = story.querySelector('[data-story-open]');
-    const caption = story.querySelector('[data-story-caption]');
+    const caption = story.querySelector('.story-frame [data-story-caption]');
+    const companion = story.querySelector('[data-story-side]');
     const count = story.querySelector('[data-story-count]');
     const status = story.querySelector('.story-status');
     const choices = Array.from(controls.querySelectorAll('[data-story-photo]'));
+    const renderPhoto = (image, link, choice) => {
+      const number = choice.dataset.storyPhoto;
+      const width = Number(choice.dataset.storyWidth);
+      const variants = new Map([480, 960, 1440].map(size => [Math.min(size, width), size]));
+      image.srcset = Array.from(variants, ([descriptor, size]) => 'assets/photos/owner-' + number + '-' + size + '.webp ' + descriptor + 'w').join(', ');
+      image.src = 'assets/photos/owner-' + number + '-960.webp';
+      image.alt = choice.dataset.storyAlt;
+      image.width = width;
+      image.height = Number(choice.dataset.storyHeight);
+      link.href = 'assets/photos/owner-' + number + '.webp';
+      link.dataset.caption = choice.dataset.storyCaption;
+    };
     controls.hidden = false;
     story.querySelector('.story-fallback').hidden = true;
     controls.addEventListener('click', event => {
       const choice = event.target.closest('[data-story-photo]');
       if (!choice || choice.getAttribute('aria-pressed') === 'true') return;
-      const number = choice.dataset.storyPhoto;
-      const width = Number(choice.dataset.storyWidth);
-      const variants = new Map([480, 960, 1440].map(size => [Math.min(size, width), size]));
-      photo.srcset = Array.from(variants, ([descriptor, size]) => 'assets/photos/owner-' + number + '-' + size + '.webp ' + descriptor + 'w').join(', ');
-      photo.src = 'assets/photos/owner-' + number + '-960.webp';
-      photo.alt = choice.dataset.storyAlt;
-      photo.width = width;
-      photo.height = Number(choice.dataset.storyHeight);
-      opener.href = 'assets/photos/owner-' + number + '.webp';
-      opener.dataset.caption = choice.dataset.storyCaption;
+      renderPhoto(photo, opener, choice);
+      const companionChoice = choices.find(button => button.dataset.storyPhoto === (choice.dataset.storyPhoto === '04' ? '06' : '04'));
+      renderPhoto(companion.querySelector('img'), companion, companionChoice);
+      companion.querySelector('[data-story-side-label]').textContent = companionChoice.getAttribute('aria-label');
       caption.textContent = choice.dataset.storyCaption;
       count.textContent = String(choices.indexOf(choice) + 1).padStart(2, '0');
       choices.forEach(button => button.setAttribute('aria-pressed', String(button === choice)));
