@@ -133,20 +133,46 @@
   const dialog = document.querySelector('.lightbox');
   if (dialog && typeof dialog.showModal === 'function') {
     let opener;
+    let pictures = [];
+    let index = 0;
+    const image = dialog.querySelector('img');
+    const caption = dialog.querySelector('#lightbox-caption');
+    const position = dialog.querySelector('.lightbox-position');
+    const previous = dialog.querySelector('.lightbox-prev');
+    const next = dialog.querySelector('.lightbox-next');
+    const number = new Intl.NumberFormat('ar-SA');
     const close = () => dialog.close();
+    const showPicture = offset => {
+      if (!pictures.length) return;
+      index = (index + offset + pictures.length) % pictures.length;
+      const link = pictures[index];
+      const source = link.querySelector('img');
+      image.src = link.href;
+      image.alt = source.alt;
+      image.width = source.width;
+      image.height = source.height;
+      caption.textContent = link.dataset.caption;
+      position.textContent = 'الصورة ' + number.format(index + 1) + ' من ' + number.format(pictures.length);
+      previous.disabled = next.disabled = pictures.length < 2;
+    };
     document.querySelectorAll('[data-lightbox]').forEach(link => {
       link.addEventListener('click', event => {
         event.preventDefault();
         opener = link;
-        const source = link.querySelector('img');
-        const image = dialog.querySelector('img');
-        image.src = link.href;
-        image.alt = source.alt;
-        image.width = source.width;
-        image.height = source.height;
-        dialog.querySelector('figcaption').textContent = link.dataset.caption;
+        const group = link.closest('.gallery-browser, .opening-story');
+        pictures = group ? Array.from(group.querySelectorAll('[data-lightbox]')).filter((item, place, all) => !item.hidden && all.findIndex(other => other.href === item.href) === place) : [link];
+        index = Math.max(0, pictures.findIndex(item => item.href === link.href));
+        showPicture(0);
         dialog.showModal();
       });
+    });
+    previous.addEventListener('click', () => showPicture(-1));
+    next.addEventListener('click', () => showPicture(1));
+    dialog.addEventListener('keydown', event => {
+      if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+        event.preventDefault();
+        showPicture(event.key === 'ArrowLeft' ? 1 : -1);
+      }
     });
     dialog.querySelector('.lightbox-close').addEventListener('click', close);
     dialog.addEventListener('click', event => { if (event.target === dialog) close(); });
