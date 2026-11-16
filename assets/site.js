@@ -27,6 +27,25 @@
   }
   const form = document.getElementById('request-form');
   if (form) {
+    const preview = form.querySelector('.request-preview');
+    if (preview) {
+      const updatePreview = () => {
+        const service = form.elements.service.value.trim();
+        const district = form.elements.district.value.trim();
+        const details = form.elements.details.value.trim();
+        preview.querySelector('[data-request-service]').textContent = service || 'اختر الخدمة المطلوبة';
+        const districtLine = preview.querySelector('[data-request-district]');
+        districtLine.textContent = 'الحي: ' + district;
+        districtLine.hidden = !district;
+        const detailsLine = preview.querySelector('[data-request-details]');
+        detailsLine.textContent = details;
+        detailsLine.hidden = !details;
+      };
+      preview.hidden = false;
+      updatePreview();
+      form.addEventListener('input', updatePreview);
+      form.addEventListener('change', updatePreview);
+    }
     form.addEventListener('submit', event => {
       event.preventDefault();
       if (!form.reportValidity()) return;
@@ -68,12 +87,29 @@
       status.textContent = 'تُعرض الآن صورة: ' + choice.dataset.storyCaption;
     });
   }
-  const gallery = document.querySelector('.gallery-browser');
-  if (gallery) {
+  document.querySelectorAll('.material-explorer').forEach(explorer => {
+    const controls = explorer.querySelector('.material-choices');
+    const choices = Array.from(controls.querySelectorAll('[data-material]'));
+    const panels = Array.from(explorer.querySelectorAll('[data-material-panel]'));
+    const status = explorer.querySelector('[data-material-status]');
+    const selectMaterial = choice => {
+      const key = choice.dataset.material;
+      choices.forEach(button => button.setAttribute('aria-pressed', String(button === choice)));
+      panels.forEach(panel => { panel.hidden = panel.dataset.materialPanel !== key; });
+      if (status) status.textContent = 'تستعرض الآن خامة: ' + choice.querySelector('[data-material-name]').textContent;
+    };
+    controls.hidden = false;
+    panels.forEach((panel, index) => { panel.hidden = index !== 0; });
+    controls.addEventListener('click', event => {
+      const choice = event.target.closest('[data-material]');
+      if (choice) selectMaterial(choice);
+    });
+  });
+  document.querySelectorAll('.gallery-browser').forEach(gallery => {
     const controls = gallery.querySelector('.gallery-filters');
     const cards = Array.from(gallery.querySelectorAll('[data-group]'));
     const status = gallery.querySelector('.gallery-result');
-    const section = gallery.closest('.full-gallery');
+    const section = gallery.closest('.full-gallery, .projects-section');
     const count = new Intl.NumberFormat('ar-SA');
     controls.hidden = false;
     const filter = category => {
@@ -85,7 +121,7 @@
       controls.querySelectorAll('button').forEach(button => {
         button.setAttribute('aria-pressed', String(button.dataset.galleryFilter === category));
       });
-      section.classList.toggle('is-filtered', category !== 'all');
+      if (section) section.classList.toggle('is-filtered', category !== 'all');
       status.textContent = 'عرض ' + count.format(visible) + ' من ' + count.format(cards.length) + ' صور';
     };
     controls.addEventListener('click', event => {
@@ -93,7 +129,7 @@
       if (button) filter(button.dataset.galleryFilter);
     });
     filter('all');
-  }
+  });
   const dialog = document.querySelector('.lightbox');
   if (dialog && typeof dialog.showModal === 'function') {
     let opener;
