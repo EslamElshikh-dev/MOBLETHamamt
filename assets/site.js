@@ -27,6 +27,21 @@
   }
   const form = document.getElementById('request-form');
   if (form) {
+    const serviceSelect = form.elements.service;
+    serviceSelect.addEventListener('change', () => { form.querySelector('.form-status').textContent = ''; });
+    const findService = slug => Array.from(serviceSelect.options).find(option => option.dataset.serviceSlug === slug);
+    const requestedService = findService(new URLSearchParams(location.search).get('service'));
+    if (requestedService) serviceSelect.value = requestedService.value;
+    document.querySelectorAll('[data-request-service]').forEach(link => {
+      link.addEventListener('click', () => {
+        const option = findService(link.dataset.requestService);
+        if (!option) return;
+        serviceSelect.value = option.value;
+        serviceSelect.dispatchEvent(new Event('change', { bubbles: true }));
+        form.querySelector('.form-status').textContent = 'تم اختيار الخدمة: ' + option.value;
+        serviceSelect.focus({ preventScroll: true });
+      });
+    });
     const preview = form.querySelector('.request-preview');
     if (preview) {
       const updatePreview = () => {
@@ -105,6 +120,28 @@
       if (choice) selectMaterial(choice);
     });
   });
+  document.querySelectorAll('.craft-section').forEach(section => {
+    const buttons = Array.from(section.querySelectorAll('[data-craft-select]'));
+    const panels = Array.from(section.querySelectorAll('[data-craft-panel]'));
+    const status = section.querySelector('[data-craft-status]');
+    const selectDetail = key => {
+      buttons.forEach(button => button.setAttribute('aria-pressed', String(button.dataset.craftSelect === key)));
+      panels.forEach(panel => { panel.hidden = panel.dataset.craftPanel !== key; });
+    };
+    section.querySelector('.craft-pins').hidden = false;
+    section.querySelector('.craft-choices').hidden = false;
+    selectDetail(panels[0].dataset.craftPanel);
+    buttons.forEach(button => button.addEventListener('click', () => {
+      const key = button.dataset.craftSelect;
+      selectDetail(key);
+      const panel = panels.find(item => item.dataset.craftPanel === key);
+      status.textContent = 'التفصيل المعروض: ' + panel.querySelector('h3').textContent;
+      if (button.classList.contains('craft-pin') && window.matchMedia('(max-width: 680px)').matches) {
+        panel.querySelector('h3').focus({ preventScroll: true });
+        section.querySelector('.craft-editor').scrollIntoView({ block: 'start' });
+      }
+    }));
+  });
   document.querySelectorAll('.gallery-browser').forEach(gallery => {
     const controls = gallery.querySelector('.gallery-filters');
     const cards = Array.from(gallery.querySelectorAll('[data-group]'));
@@ -146,7 +183,7 @@
       if (!pictures.length) return;
       index = (index + offset + pictures.length) % pictures.length;
       const link = pictures[index];
-      const source = link.querySelector('img');
+      const source = link.querySelector('img') || link.closest('figure').querySelector('img');
       image.src = link.href;
       image.alt = source.alt;
       image.width = source.width;
